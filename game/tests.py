@@ -27,6 +27,9 @@ class GameTest(TestCase):
         g.move('x', 1, 2)
         self.assertEqual(g.board, [['o', ' ', ' '], ['x', ' ', 'x'], [' ', ' ', 'o']])
 
+    def test_move_coordinates_not_integers(self):
+        pass
+
     def test_illegal_moves(self):
         g = Game()
 
@@ -79,49 +82,45 @@ class GameTest(TestCase):
         g.move(*m3)
         self.assertListEqual([m1, m2, m3], g.moves)
 
-    def test_is_game_ended(self):
-        # game 1 - diagonal win
+    def play_game(self, moves, result, msg):
         g = Game()
-        g.move('x', 0, 0)
-        g.move('o', 0, 1)
-        g.move('x', 1, 1)
-        g.move('o', 1, 2)
-        self.assertFalse(g.is_game_ended(), "Game is not ended yet.")
-        g.move('x', 2, 2)
-        self.assertTrue(g.is_game_ended(), "Game should ended - diagonal win.")
+        for m in moves:
+            g.move(*m)
+        self.assertEqual(g.get_winner_or_draw(), result, msg)
+
+    def test_get_winner_or_draw(self):
+        # game 1 - diagonal win
+        self.play_game(
+            [('x', 0, 0), ('o', 0, 1), ('x', 1, 1), ('o', 1, 2), ('x', 2, 2)],
+            'x',
+            'Game should ended - diagonal win.',
+        )
 
         # game 2 - horizontal win
-        g = Game()
-        g.move('x', 0, 0)
-        g.move('o', 1, 1)
-        g.move('x', 0, 1)
-        g.move('o', 1, 2)
-        self.assertFalse(g.is_game_ended(), "Game is not ended yet.")
-        g.move('x', 0, 2)
-        self.assertTrue(g.is_game_ended(), "Game should ended - horizontal win.")
+        self.play_game(
+            [('x', 0, 0), ('o', 1, 1), ('x', 0, 1), ('o', 1, 2), ('x', 0, 2)],
+            'x',
+            'Game should ended - horizontal win.',
+        )
 
         # game 3 - vertical win
-        g = Game()
-        g.move('x', 0, 0)
-        g.move('o', 0, 1)
-        g.move('x', 1, 0)
-        g.move('o', 1, 1)
-        self.assertFalse(g.is_game_ended(), "Game is not ended yet.")
-        g.move('x', 2, 0)
-        self.assertTrue(g.is_game_ended(), "Game should ended - vertical win.")
+        self.play_game(
+            [('x', 0, 0), ('o', 0, 1), ('x', 1, 0), ('o', 1, 1), ('x', 2, 0)],
+            'x',
+            'Game should ended - vertical win.',
+        )
 
         # game 4 - more than 5 moves
-        g = Game()
-        g.move('x', 0, 0)
-        g.move('o', 0, 1)
-        g.move('x', 1, 1)
-        g.move('o', 1, 2)
-        g.move('x', 2, 1)
-        g.move('o', 0, 2)
-        self.assertFalse(g.is_game_ended(), "Game is not ended yet.")
-        g.move('x', 2, 2)
-        self.assertTrue(g.is_game_ended(), "Game should ended - vertical win.")
+        self.play_game(
+            [('x', 0, 0), ('o', 0, 1), ('x', 1, 1), ('o', 1, 2), ('x', 2, 1), ('o', 0, 2), ('x', 2, 2)],
+            'x',
+            'Game should ended (more than 5 moves) - vertical win.',
+        )
 
-
-
-
+        # game 5 - draw
+        self.play_game(
+            [('x', 1, 1), ('o', 0, 0), ('x', 2, 2), ('o', 0, 2), ('x', 0, 1), ('o', 2, 1), ('x', 1, 0), ('o', 1, 2),
+             ('x', 2, 0)],
+            'draw',
+            'Game should ended - draw',
+        )
