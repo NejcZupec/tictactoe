@@ -1,4 +1,4 @@
-class Game:
+class Game(object):
     """
     A tic-tac-toe game.
     """
