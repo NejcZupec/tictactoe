@@ -3,3 +3,8 @@
 
 # Ignore database file
 db.sqlite3
+
+# Ignore coverage reports
+htmlcov/
+.coverage
+coverage.xml
