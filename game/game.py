@@ -51,17 +51,3 @@ class Game(object):
     @staticmethod
     def all_equal(row):
         return not row[0] == ' ' and row[1:] == row[:-1]
-
-
-if __name__ == '__main__':
-    g = Game()
-
-    # Game example
-    g.print_board()
-    g.move('x', 0, 1)
-    g.print_board()
-    g.move('o', 0, 0)
-    g.print_board()
-    g.move('x', 1, 1)
-    g.print_board()
-
