@@ -8,3 +8,6 @@ db.sqlite3
 htmlcov/
 .coverage
 coverage.xml
+
+# Ugnore bower files
+/components

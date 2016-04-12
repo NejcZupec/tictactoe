@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+from django.conf.global_settings import STATICFILES_FINDERS
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangobower',
     'game',
+    'web',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -56,7 +60,7 @@ ROOT_URLCONF = 'tictactoe.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'web/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,3 +124,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_FINDERS = STATICFILES_FINDERS + [
+    'djangobower.finders.BowerFinder',
+]
+
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
+
+BOWER_INSTALLED_APPS = (
+    'bootstrap#3.3.5',
+    'font-awesome#4.2.0',
+    'classie#1.0.1',
+    'jqBootstrapValidation#1.3.6',
+)
