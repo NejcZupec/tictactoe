@@ -43,10 +43,10 @@ class Game(object):
             last_player = self.moves[-1][0]
 
             # diagonal win
-            d1 = [self.board[i][i] for i in range(len(self.board))]
+            d1 = [row[i] for i, row in enumerate(self.board)]
             if self._all_equal(d1):
                 return last_player
-            d2 = [row[i] for i, row in enumerate(self.board)]
+            d2 = [row[-i-1] for i, row in enumerate(self.board)]
             if self._all_equal(d2):
                 return last_player
 
