@@ -60,7 +60,19 @@ class Game(models.Model):
         A wrapper for the add_move function. It adds action and returns move and action as a tuple.
         """
         m = self.add_move(player, x, y)
-        return m, self.get_winner_or_draw()
+        action = self.get_winner_or_draw()
+
+        if action == 'draw':
+            self.result = 'draw'
+            self.save()
+        elif action == 'x':
+            self.result = 'win1'
+            self.save()
+        elif action == 'o':
+            self.result = 'win2'
+            self.save()
+
+        return m, action
 
     def get_last_move(self):
         return self.move_set.latest('sequence_no')
@@ -100,6 +112,16 @@ class Game(models.Model):
         g = Game(board=board, moves=moves)
         return g.get_winner_or_draw()
 
+    def get_field_state(self, x, y):
+        """
+        Returns (empty, cross, circle or ''). It returns '' if game is already finished.
+        """
+        try:
+            m = self.move_set.get(x=x, y=y, game=self)
+        except Move.DoesNotExist:
+            return 'empty' if self.result == 'in_progress' else ''
+        return 'cross' if m.player == self.player1 else 'circle'
+
     def __unicode__(self):
         return 'Game (%s vs. %s, result=%s)' % (self.player1.username, self.player2.username, self.result)
 
@@ -117,3 +139,6 @@ class Move(models.Model):
 
     def __unicode__(self):
         return 'Move (player=%s, x=%d, y=%d)' % (self.player.username, self.x, self.y)
+
+    class Meta:
+        unique_together = ('game', 'x', 'y', 'player')

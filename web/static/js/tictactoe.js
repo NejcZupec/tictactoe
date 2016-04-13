@@ -80,5 +80,5 @@ TicTacToeGame.prototype = {
         $(".field").on("click", function () {
             that.clickOnField($(this));
         });
-    }
+    },
 };

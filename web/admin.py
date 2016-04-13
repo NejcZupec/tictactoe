@@ -13,6 +13,7 @@ class GameAdmin(admin.ModelAdmin):
 
 class MoveAdmin(admin.ModelAdmin):
     list_display = ['game', 'player', 'sequence_no', 'x', 'y']
+    list_filter = ['game']
 
 
 admin.site.register(Player, PlayerAdmin)

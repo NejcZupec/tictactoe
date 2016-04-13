@@ -50,3 +50,10 @@ class PlayerGameMoveModelTest(TestCase):
 
     def test_get_winner_or_draw(self):
         self.assertEqual(self.game.get_winner_or_draw(), None)
+
+    def test_get_field_status(self):
+        self.assertEqual(self.game.get_field_state(0, 0), 'empty')
+        self.game.add_move('p1', 0, 0)
+        self.assertEqual(self.game.get_field_state(0, 0), 'cross')
+        self.game.add_move('p2', 2, 2)
+        self.assertEqual(self.game.get_field_state(2, 2), 'circle')
