@@ -63,13 +63,11 @@
     transition: all 0.3s ease 0.0s;
 }
 
-.player-info-left,
-.player-info-left h3 {
+.player-info-left {
     text-align: left;
 }
 
-.player-info-right,
-.player-info-right h3 {
+.player-info-right {
     text-align: right;
 }
 

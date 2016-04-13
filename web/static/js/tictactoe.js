@@ -1,12 +1,6 @@
-$(document).ready(function () {
-
-    // start a new TicTacToe game
-    var game = new TicTacToeGame($("#board"));
-});
-
 function TicTacToeGame(boardObject) {
     this.board = boardObject;
-    this.currentPlayer = 'p1';
+    this.currentPlayer = "p1";
 
     this.registerEvents();
 }
@@ -14,43 +8,43 @@ function TicTacToeGame(boardObject) {
 TicTacToeGame.prototype = {
 
     addCircleToField: function (field) {
-        field.removeClass('empty');
-        field.addClass('field-circle');
-        field.append('<div class="circle"></div>');
+        field.removeClass("empty");
+        field.addClass("field-circle");
+        field.append("<div class='circle'></div>");
     },
 
     addCrossToField: function (field) {
-        field.removeClass('empty');
-        field.addClass('field-cross');
+        field.removeClass("empty");
+        field.addClass("field-cross");
     },
 
     clickOnField: function (field) {
 
         // check if the move is valid
-        if (field.hasClass('empty')) {
-            if (this.currentPlayer == 'p1') {
+        if (field.hasClass("empty")) {
+            if (this.currentPlayer === "p1") {
                 this.addCrossToField(field);
-                this.sendMoveToServer('p1', field);
-                this.currentPlayer = 'p2';
+                this.sendMoveToServer("p1", field);
+                this.currentPlayer = "p2";
             } else {
                 this.addCircleToField(field);
-                this.sendMoveToServer('p2', field);
-                this.currentPlayer = 'p1';
+                this.sendMoveToServer("p2", field);
+                this.currentPlayer = "p1";
             }
 
             // toggle player
-            $("#player-1-info").toggleClass('player-info-active');
-            $("#player-2-info").toggleClass('player-info-active');
+            $("#player-1-info").toggleClass("player-info-active");
+            $("#player-2-info").toggleClass("player-info-active");
         }
     },
 
     sendMoveToServer: function (player, field) {
-        var field_id = field.attr('id');
+        var field_id = field.attr("id");
         var x = field_id.charAt(6);
         var y = field_id.charAt(8);
 
         $.ajax({
-            type: 'POST',
+            type: "POST",
             url: new_move_url,
             data: {
                 'player': player,
@@ -66,7 +60,7 @@ TicTacToeGame.prototype = {
     registerEvents: function () {
         var that = this;
 
-        $('.field').on('click', function () {
+        $(".field").on("click", function () {
             that.clickOnField($(this));
         });
     }

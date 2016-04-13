@@ -80,4 +80,11 @@
 
     <!-- TicTacToe JavaScript -->
     <script src="{% static 'js/tictactoe.js' %}"></script>
+
+    <!-- Start a new TicTacToe game -->
+    <script>
+        $(document).ready(function () {
+            new TicTacToeGame($("#board"));
+        });
+    </script>
 {% endblock javascript %}
