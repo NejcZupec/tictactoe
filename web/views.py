@@ -25,6 +25,15 @@ class GameView(TemplateView):
         return render(request, self.template_name, locals())
 
 
+class Leaderboard(TemplateView):
+    template_name = 'leaderboard.html'
+
+    def get(self, request, *args, **kwargs):
+        players = Player.objects.all()
+
+        return render(request, self.template_name, locals())
+
+
 def new_game(request, p1_type, p2_type):
     """
     Start a new game. Create a Game object and redirects to it.

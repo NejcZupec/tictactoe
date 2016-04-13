@@ -84,3 +84,12 @@ h2 small,
 h3 small {
     color: inherit;
 }
+
+section.leaderboard {
+    padding-top: 30px;
+}
+
+header.leaderboard .container {
+    padding-top: 100px;
+    padding-bottom: 10px;
+}

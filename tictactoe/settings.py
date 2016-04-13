@@ -138,4 +138,5 @@ BOWER_INSTALLED_APPS = (
     'font-awesome#4.2.0',
     'classie#1.0.1',
     'jqBootstrapValidation#1.3.6',
+    'datatables#1.10.11',
 )

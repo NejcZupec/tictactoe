@@ -19,6 +19,7 @@
 
         <!-- Custom CSS -->
         <link href="{% static 'css/freelancer.css' %}" rel="stylesheet">
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet">
 
         <!-- Custom Fonts -->
         <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
@@ -76,10 +77,10 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#"><i class="fa fa-list"></i> Games</a>
+                        <a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#"><i class="fa fa-trophy"></i> Leaderboard</a>
+                        <a href="{% url 'leaderboard' %}"><i class="fa fa-trophy"></i> Leaderboard</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#"><i class="fa fa-user"></i> Login</a>
