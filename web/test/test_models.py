@@ -12,11 +12,7 @@ class PlayerGameMoveModelTest(TestCase):
         self.player2 = Player.objects.create(username='anonymous2', type='anonymous')
 
         # start game
-        self.game = Game.objects.create(
-            player1=self.player1,
-            player2=self.player2,
-            result='in_progress',
-        )
+        self.game = Game.objects.create(player1=self.player1, player2=self.player2)
 
     def test_player_one_starts(self):
         pass
@@ -69,4 +65,15 @@ class PlayerGameMoveModelTest(TestCase):
         self.assertEqual(self.game.next_player(), "p2")
         self.game.add_move("p2", 1, 1)
         self.assertEqual(self.game.next_player(), "p1")
+
+    def test_get_ai_player(self):
+        player1 = Player.objects.create(username='anonymous1', type='anonymous')
+        player2 = Player.objects.create(username='AI', type='ai_random')
+        self.game = Game.objects.create(player1=player1, player2=player2)
+        self.assertEqual(self.get_ai_player(), 'p2')
+
+        player3 = Player.objects.create(username='AI', type='ai_random')
+        player4 = Player.objects.create(username='anonymous3', type='anonymous')
+        self.game = Game.objects.create(player1=player3, player2=player4)
+        self.assertEqual(self.get_ai_player(), 'p1')
 

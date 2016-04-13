@@ -1,9 +1,11 @@
+import json
+
 from django.http import Http404, HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
 
-from .models import Game
-from .utils import create_new_game
+from .models import Game, Player
+from .utils import create_new_game, generate_unique_anonymous_username
 
 
 class HomeView(TemplateView):
@@ -17,6 +19,9 @@ class GameView(TemplateView):
         game = Game.objects.get(id=game_id)
         board = [[game.get_field_state(row_index, column_index) for column_index in range(3)] for row_index in range(3)]
         game_finished = True if game.get_winner_or_draw() else False
+        ai_player = game.get_ai_player()
+
+        print "aha5"
 
         return render(request, self.template_name, locals())
 
@@ -30,7 +35,10 @@ def new_game(request, p1_type, p2_type):
         return redirect(game)
 
     if p1_type == 'anonymous' and p2_type == 'ai_random':
-        game = create_new_game('anonymous', 'ai_random')
+        player1 = Player.objects.create(username=generate_unique_anonymous_username(), type=p1_type)
+        player2, created = Player.objects.get_or_create(username="AI Random", type=p2_type)
+        game = Game.objects.create(player1=player1, player2=player2)
+        print "aha4"
         return redirect(game)
 
     raise Http404
@@ -59,3 +67,10 @@ def rematch(request, game_id):
     )
 
     return redirect(game)
+
+
+def ai_next_move(request, game_id):
+    game = Game.objects.get(id=game_id)
+    x, y = game.get_next_random_move()
+
+    return HttpResponse(json.dumps({'x': x, 'y': y}), content_type='application/json')

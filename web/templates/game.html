@@ -69,11 +69,6 @@
 {% endblock modal-windows %}
 
 {% block javascript %}
-    <!-- Global variables -->
-    <script>
-        var newMoveUrl = "{% url 'new_move' game.id %}";
-    </script>
-
     {{ block.super }}
 
     <!-- Generate CSRF Token -->
@@ -85,7 +80,8 @@
     <!-- Start a new TicTacToe game -->
     <script>
         $(document).ready(function () {
-            new TicTacToeGame($("#board"), "{{ game.next_player }}");
+            new TicTacToeGame($("#board"), "{{ game.next_player }}", "{% url 'new_move' game.id %}",
+                    "{% url 'ai_next_move' game.id %}", "{{ ai_player }}");
         });
     </script>
 {% endblock javascript %}

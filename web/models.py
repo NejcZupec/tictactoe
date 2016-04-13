@@ -134,6 +134,19 @@ class Game(models.Model):
             return 'empty' if self.result == 'in_progress' else ''
         return 'cross' if m.player == self.player1 else 'circle'
 
+    def get_next_random_move(self):
+        from game.game import Game
+        board, moves = self.get_board_2d_and_moves()
+        g = Game(board=board, moves=moves)
+        return g.next_random_move()
+
+    def get_ai_player(self):
+        if self.player1.type in ['ai_random', 'ai_min_max']:
+            return 'p1'
+        if self.player2.type in ['ai_random', 'ai_min_max']:
+            return 'p2'
+        return ''
+
     def __unicode__(self):
         return 'Game (%s vs. %s, result=%s)' % (self.player1.username, self.player2.username, self.result)
 

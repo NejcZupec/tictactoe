@@ -5,6 +5,7 @@ from web.models import Player, Game, Move
 
 class PlayerAdmin(admin.ModelAdmin):
     list_display = ['username', 'type']
+    list_filter = ['type']
 
 
 class GameAdmin(admin.ModelAdmin):

@@ -1,21 +1,35 @@
-function TicTacToeGame(boardObject, currentPlayer) {
+function TicTacToeGame(boardObject, currentPlayer, newMoveUrl, aiNextMoveUrl, aiPlayer) {
     this.board = boardObject;
     this.currentPlayer = currentPlayer;
+    this.newMoveUrl = newMoveUrl;
+    this.aiNextMoveUrl = aiNextMoveUrl;
+    this.aiPlayer = aiPlayer;
 
     this.registerEvents();
+    this.startGame();
 }
 
 TicTacToeGame.prototype = {
 
-    addCircleToField: function (field) {
+    addCircle: function (x, y) {
+        var field = $("#field-" + x + "-" + y);
         field.removeClass("field-empty");
         field.addClass("field-circle");
         field.append("<div class='circle'></div>");
     },
 
-    addCrossToField: function (field) {
+    addCross: function (x, y) {
+        var field = $("#field-" + x + "-" + y);
         field.removeClass("field-empty");
         field.addClass("field-cross");
+    },
+
+    addCrossOrCircle: function (x, y) {
+        if (this.currentPlayer === "p1") {
+            this.addCross(x, y);
+        } else {
+            this.addCircle(x, y);
+        }
     },
 
     togglePlayers: function () {
@@ -31,17 +45,14 @@ TicTacToeGame.prototype = {
     },
 
     clickOnField: function (field) {
-        var that = this;
 
         // check if move is valid and if it is, send it to the server
         if (field.hasClass("field-empty")) {
-            this.sendMoveToServer(this.currentPlayer, field);
-
-            if (this.currentPlayer === "p1") {
-                that.addCrossToField(field);
-            } else {
-                that.addCircleToField(field);
-            }
+            var fieldId = field.attr("id");
+            var x = fieldId.charAt(6);
+            var y = fieldId.charAt(8);
+            this.sendMoveToServer(this.currentPlayer, x, y);
+            this.addCrossOrCircle(x, y);
         }
     },
 
@@ -49,15 +60,12 @@ TicTacToeGame.prototype = {
         $(".field").removeClass('field-empty');
     },
 
-    sendMoveToServer: function (player, field) {
-        var fieldId = field.attr("id");
-        var x = fieldId.charAt(6);
-        var y = fieldId.charAt(8);
+    sendMoveToServer: function (player, x, y) {
         var that = this;
 
         $.ajax({
             type: "POST",
-            url: newMoveUrl,
+            url: that.newMoveUrl,
             data: {
                 "player": player,
                 "x": x,
@@ -66,6 +74,10 @@ TicTacToeGame.prototype = {
             success: function (response) {
                 if (response === 'None') {
                     that.togglePlayers();
+
+                    if (that.aiPlayer === that.currentPlayer) {
+                        that.getAiNextMove();
+                    }
                 } else {
                     that.lockFields();
 
@@ -91,4 +103,24 @@ TicTacToeGame.prototype = {
             that.clickOnField($(this));
         });
     },
+
+    getAiNextMove: function () {
+        var that = this;
+
+        $.ajax({
+            type: "GET",
+            url: this.aiNextMoveUrl,
+            success: function (data) {
+
+                that.addCrossOrCircle(data.x, data.y);
+                that.sendMoveToServer(that.currentPlayer, data.x, data.y);
+            }
+        })
+    },
+
+    startGame: function () {
+        if (this.aiPlayer === this.currentPlayer) {
+            this.getAiNextMove();
+        }
+    }
 };
