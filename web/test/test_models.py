@@ -35,3 +35,18 @@ class PlayerGameMoveModelTest(TestCase):
         self.assertEqual(m2.sequence_no, 2)
 
         self.assertEqual(Move.objects.filter(game=self.game).count(), 2)
+
+    def test_get_board_2d_and_moves(self):
+        board, moves = self.game.get_board_2d_and_moves()
+        self.assertEqual(board, [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']])
+        self.assertEqual(moves, [])
+
+        self.game.add_move('p1', 0, 0)
+        self.game.add_move('p2', 1, 1)
+
+        board, moves = self.game.get_board_2d_and_moves()
+        self.assertEqual(board, [['x', ' ', ' '], [' ', 'o', ' '], [' ', ' ', ' ']])
+        self.assertEqual(moves, [('x', 0, 0), ('o', 1, 1)])
+
+    def test_get_winner_or_draw(self):
+        self.assertEqual(self.game.get_winner_or_draw(), None)

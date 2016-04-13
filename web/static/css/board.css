@@ -11,7 +11,7 @@
     overflow: hidden;
 }
 
-#board .field:hover {
+#board .field-empty:hover {
     box-shadow: inset 0 0 0 5px #2c3e50;
     cursor: pointer;
     background: rgba(44, 62, 80, 0.4);

@@ -1,14 +1,14 @@
 class Game(object):
     """
-    A tic-tac-toe game.
+    A tic-tac-toe game. A whitespace (' ') represents a blank field.
     """
 
-    def __init__(self):
+    def __init__(self, board=None, moves=None):
         """
-        Initialize an empty board (2D array). A whitespace (' ') represents a blank field.
+        Initialize a TicTacToe game with specific moves and board.
         """
-        self.board = [[' ' for _ in range(3)] for _ in range(3)]
-        self.moves = []  # every move is presented as a tuple (player, x, y)
+        self.board = [[' ' for _ in range(3)] for _ in range(3)] if board is None else board
+        self.moves = [] if moves is None else moves  # every move is presented as a tuple (player, x, y)
 
     def print_board(self):
         """

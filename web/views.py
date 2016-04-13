@@ -43,6 +43,6 @@ def new_move(request, game_id):
     x = request.POST.get('x')
     y = request.POST.get('y')
 
-    game.add_move(player, x, y)
+    m, action = game.add_move_and_get_action(player, x, y)
 
-    return HttpResponse('')
+    return HttpResponse(str(action))
