@@ -68,7 +68,15 @@
 {% endblock header %}
 
 {% block javascript %}
+    <!-- Global variables -->
+    <script>
+        var new_move_url = "{% url 'new_move' game.id %}";
+    </script>
+
     {{ block.super }}
+
+    <!-- Generate CSRF Token -->
+    <script src="{% static 'js/csrfToken.js' %}"></script>
 
     <!-- TicTacToe JavaScript -->
     <script src="{% static 'js/tictactoe.js' %}"></script>

@@ -42,6 +42,24 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse('game', args=[self.id])
 
+    def add_move(self, player, x, y):
+        """
+        Save move to database.
+        player = p1 or p2
+        """
+        return Move.objects.create(
+            game=self,
+            player=self.player1 if player == 'p1' else self.player2,
+            sequence_no=self.get_next_move_sequence_number(),
+            x=x,
+            y=y,
+        )
+
+    def get_next_move_sequence_number(self):
+        if self.move_set.count() == 0:
+            return 1
+        return self.move_set.latest('sequence_no').sequence_no + 1
+
     def __unicode__(self):
         return 'Game (%s vs. %s, result=%s)' % (self.player1.username, self.player2.username, self.result)
 

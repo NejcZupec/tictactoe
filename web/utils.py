@@ -14,7 +14,9 @@ def generate_unique_anonymous_username():
 
 
 def create_new_game(p1_type, p2_type):
+    """
+    Generate two random players and create a new Game instance.
+    """
     player1 = Player.objects.create(username=generate_unique_anonymous_username(), type=p1_type)
     player2 = Player.objects.create(username=generate_unique_anonymous_username(), type=p2_type)
-
     return Game.objects.create(player1=player1, player2=player2)

@@ -26,3 +26,12 @@ class PlayerGameMoveModelTest(TestCase):
 
     def test_one_game_can_have_max_nine_moves(self):
         pass
+
+    def test_get_next_move_sequence_number(self):
+        m1 = self.game.add_move('p1', 0, 0)
+        self.assertEqual(m1.sequence_no, 1)
+
+        m2 = self.game.add_move('p2', 1, 1)
+        self.assertEqual(m2.sequence_no, 2)
+
+        self.assertEqual(Move.objects.filter(game=self.game).count(), 2)
