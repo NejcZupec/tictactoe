@@ -1,33 +1,52 @@
 $(document).ready(function () {
 
-    var currentPlayer = 'x';
+    // start a new TicTacToe game
+    var game = new TicTacToeGame($("#board"));
+});
 
-    $('.field').on('click', function (field) {
+function TicTacToeGame(boardObject) {
+    this.board = boardObject;
+    this.currentPlayer = 'p1';
+
+    this.registerEvents();
+}
+
+TicTacToeGame.prototype = {
+
+    addCircleToField: function (field) {
+        field.removeClass('empty');
+        field.addClass('field-circle');
+        field.append('<div class="circle"></div>');
+    },
+
+    addCrossToField: function (field) {
+        field.removeClass('empty');
+        field.addClass('field-cross');
+    },
+
+    clickOnField: function (field) {
 
         // check if the move is valid
-        if ($(this).hasClass('empty')) {
-            if (currentPlayer == 'x') {
-                addCrossToField($(this));
-                currentPlayer = 'o';
+        if (field.hasClass('empty')) {
+            if (this.currentPlayer == 'p1') {
+                this.addCrossToField(field);
+                this.currentPlayer = 'p2';
             } else {
-                addCircleToField($(this));
-                currentPlayer = 'x';
+                this.addCircleToField(field);
+                this.currentPlayer = 'p1';
             }
 
             // toggle player
             $("#player-1-info").toggleClass('player-info-active');
             $("#player-2-info").toggleClass('player-info-active');
         }
-    })
-});
+    },
 
-function addCircleToField(field) {
-    field.removeClass('empty');
-    field.addClass('field-circle');
-    field.append('<div class="circle"></div>')
-}
+    registerEvents: function () {
+        var that = this;
 
-function addCrossToField(field) {
-    field.removeClass('empty');
-    field.addClass('field-cross');
-}
+        $('.field').on('click', function () {
+            that.clickOnField($(this));
+        });
+    }
+};
