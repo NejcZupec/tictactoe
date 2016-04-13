@@ -54,3 +54,14 @@ def new_move(request, game_id):
     m, action = game.add_move_and_get_action(player, x, y)
 
     return HttpResponse(str(action))
+
+
+def rematch(request, game_id):
+    old_game = Game.objects.get(id=game_id)
+
+    game = Game.objects.create(
+        player1=old_game.player2,
+        player2=old_game.player1,
+    )
+
+    return redirect(game)
