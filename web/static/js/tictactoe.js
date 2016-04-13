@@ -68,7 +68,17 @@ TicTacToeGame.prototype = {
                     that.togglePlayers();
                 } else {
                     that.lockFields();
-                    alert(response);
+
+                    if (response === 'x') {
+                        var txt = 'Player 1 wins!'
+                    } else if (response === 'o') {
+                        var txt = 'Player 2 wins!'
+                    } else {
+                        var txt = "Draw"
+                    }
+
+                    $("#game-ended-modal h2").html(txt);
+                    $("#game-ended-modal").modal()
                 }
             }
         });
