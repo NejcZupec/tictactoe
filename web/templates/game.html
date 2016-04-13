@@ -13,44 +13,54 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-lg-offset-3 col-md-offset-3">
+                <div id="player-1-info" class="col-md-3 player-info player-info-left player-info-active">
+                    <h3>Player 1</h3>
+                    <p>{{ game.player1.username }}</p>
+                    <h2><i class="fa fa-times"></i></h2>
+                </div>
+                <div class="col-md-6">
                     <div id="board" class="board">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-0-0" class="field empty"></div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-0-1" class="field empty"></div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-0-2" class="field empty"></div>
                             </div>
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-1-0" class="field empty"></div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-1-1" class="field empty"></div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-1-2" class="field empty"></div>
                             </div>
                         </div>
                         <br>
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-2-0" class="field empty"></div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-2-1" class="field empty"></div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-sm-4 col-xs-4">
                                 <div id="field-2-2" class="field empty"></div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div id="player-2-info" class="col-md-3 player-info player-info-right">
+                    <h3>Player 2</h3>
+                    <p>{{ game.player2.username }}</p>
+                    <h2><i class="fa fa-circle-o"></i></h2>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ def generate_unique_anonymous_username():
     Generate an unique username for a player. Check in database if the username already exists.
     TODO: check in db if a user with the generated username already exists
     """
-    unique_id = get_random_string(length=32)
+    unique_id = get_random_string(length=12)
     new_username = "user_%s" % unique_id
     return new_username
 

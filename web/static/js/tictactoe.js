@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     $('.field').on('click', function (field) {
 
+        // check if the move is valid
         if ($(this).hasClass('empty')) {
             if (currentPlayer == 'x') {
                 addCrossToField($(this));
@@ -12,6 +13,10 @@ $(document).ready(function () {
                 addCircleToField($(this));
                 currentPlayer = 'x';
             }
+
+            // toggle player
+            $("#player-1-info").toggleClass('player-info-active');
+            $("#player-2-info").toggleClass('player-info-active');
         }
     })
 });
