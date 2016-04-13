@@ -66,7 +66,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">Tic Tac Toe</a>
+                <a class="navbar-brand" href="{% url 'home' %}">Tic Tac Toe</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -375,23 +375,25 @@
         </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    {% block javascript %}
+        <!-- jQuery -->
+        <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="{% static 'classie/classie.js' %}"></script>
-    <script src="{% static 'js/cbpAnimatedHeader.js' %}"></script>
+        <!-- Plugin JavaScript -->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script src="{% static 'classie/classie.js' %}"></script>
+        <script src="{% static 'js/cbpAnimatedHeader.js' %}"></script>
 
-    <!-- Contact Form JavaScript -->
-    <script src="{% static 'jqBootstrapValidation/jqBootstrapValidation.js' %}"></script>
-    <script src="{% static 'js/contact_me.js' %}"></script>
+        <!-- Contact Form JavaScript -->
+        <script src="{% static 'jqBootstrapValidation/jqBootstrapValidation.js' %}"></script>
+        <script src="{% static 'js/contact_me.js' %}"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="{% static 'js/freelancer.js' %}"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="{% static 'js/freelancer.js' %}"></script>
+    {% endblock javascript %}
 
 </body>
 
