@@ -131,3 +131,21 @@ class GameTest(TestCase):
             'x',
             'Game should ended - diagonal win.',
         )
+
+    def test_get_empty_field(self):
+        g = Game()
+        g.get_empty_fields()
+        self.assertEqual(g.get_empty_fields(), [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)])
+        g.move('x', 1, 1)
+        g.move('o', 0, 0)
+        g.move('x', 2, 2)
+        g.move('o', 1, 0)
+        self.assertEqual(g.get_empty_fields(), [(0, 1), (0, 2), (1, 2), (2, 0), (2, 1)])
+
+    def test_next_random_move(self):
+        g = Game()
+        g.move('x', 1, 1)
+        g.move('o', 0, 0)
+        g.move('x', 2, 2)
+        g.move('o', 1, 0)
+        self.assertIn(g.next_random_move(), [(0, 1), (0, 2), (1, 2), (2, 0), (2, 1)])

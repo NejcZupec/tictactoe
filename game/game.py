@@ -1,3 +1,6 @@
+import random
+
+
 class Game(object):
     """
     A tic-tac-toe game. A whitespace (' ') represents a blank field.
@@ -60,11 +63,29 @@ class Game(object):
                 if self._all_equal(row):
                     return last_player
 
-            # Draw game. No winner, the board is full.
+            # draw game, no winner, the board is full
             if len(self.moves) == 9:
                 return 'draw'
 
         return None
+
+    def get_empty_fields(self):
+        """
+        Return a list of empty fields, e.g. [(0, 1), (1, 1)].
+        """
+        result = []
+        for i, row in enumerate(self.board):
+            for j, column in enumerate(row):
+                if self.board[i][j] == ' ':
+                    result.append((i, j))
+        return result
+
+    def next_random_move(self):
+        """
+        Randomly choose an empty field, e.g. (2, 1).
+        """
+        empty_fields = self.get_empty_fields()
+        return random.choice(empty_fields)
 
     @staticmethod
     def _all_equal(row):
