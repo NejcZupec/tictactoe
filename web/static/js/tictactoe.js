@@ -57,7 +57,21 @@ TicTacToeGame.prototype = {
     },
 
     lockFields: function () {
-        $(".field").removeClass('field-empty');
+        $(".field").removeClass("field-empty");
+    },
+
+    prepareText: function (response) {
+        var txt;
+
+        if (response === "x") {
+            txt = "Player 1 wins!"
+        } else if (response === 'o') {
+            txt = "Player 2 wins!"
+        } else {
+            txt = "Draw"
+        }
+
+        return txt;
     },
 
     sendMoveToServer: function (player, x, y) {
@@ -72,7 +86,7 @@ TicTacToeGame.prototype = {
                 "y": y,
             },
             success: function (response) {
-                if (response === 'None') {
+                if (response === "None") {
                     that.togglePlayers();
 
                     if (that.aiPlayer === that.currentPlayer) {
@@ -80,17 +94,8 @@ TicTacToeGame.prototype = {
                     }
                 } else {
                     that.lockFields();
-
-                    if (response === 'x') {
-                        var txt = 'Player 1 wins!'
-                    } else if (response === 'o') {
-                        var txt = 'Player 2 wins!'
-                    } else {
-                        var txt = "Draw"
-                    }
-
-                    $("#game-ended-modal h2").html(txt);
-                    $("#game-ended-modal").modal()
+                    $("#game-ended-modal h2").html(that.prepareText(response));
+                    $("#game-ended-modal").modal();
                 }
             }
         });
@@ -115,7 +120,7 @@ TicTacToeGame.prototype = {
                 that.addCrossOrCircle(data.x, data.y);
                 that.sendMoveToServer(that.currentPlayer, data.x, data.y);
             }
-        })
+        });
     },
 
     startGame: function () {
