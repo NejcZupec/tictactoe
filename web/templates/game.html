@@ -14,9 +14,14 @@
         <div class="container">
             <div class="row">
                 <div id="player-1-info" class="col-md-3 player-info player-info-left {% if game.next_player == 'p1' %}player-info-active{% endif %}">
-                    <h3>Player 1</h3>
-                    <p>{{ game.player1.username }}</p>
-                    <h2><i class="fa fa-times"></i></h2>
+                    <h1><i class="fa fa-times"></i> <small>Player 1</small></h1>
+                    <h2>{{ game.player1.username }}</h2>
+
+                    <br><br>
+
+                    <h3>{{ stats.1.win }} <small>Win</small></h3>
+                    <h3>{{ stats.1.lose }} <small>Lose</small></h3>
+                    <h3>{{ stats.1.draw }} <small>Draw</small></h3>
                 </div>
                 <div class="col-md-6">
                     <div id="board" class="board">
@@ -35,9 +40,14 @@
                     </div>
                 </div>
                 <div id="player-2-info" class="col-md-3 player-info player-info-right {% if game.next_player == 'p2' %}player-info-active{% endif %}">
-                    <h3>Player 2</h3>
-                    <p>{{ game.player2.username }}</p>
-                    <h2><i class="fa fa-circle-o"></i></h2>
+                    <h1><small>Player 2</small> <i class="fa fa-circle-o"></i></h1>
+                    <h2>{{ game.player2.username }}</h2>
+
+                    <br><br>
+
+                    <h3><small>Win</small> {{ stats.2.win }}</h3>
+                    <h3><small>Lose</small> {{ stats.2.lose }}</h3>
+                    <h3><small>Draw</small> {{ stats.2.draw }}</h3>
                 </div>
             </div>
         </div>

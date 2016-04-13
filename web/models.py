@@ -18,6 +18,22 @@ class Player(models.Model):
     username = models.CharField(max_length=255, unique=True)
     type = models.CharField(max_length=15, choices=PLAYER_TYPE)
 
+    def win_against_player(self, player):
+        p1_wins = Game.objects.filter(player1=self, player2=player, result='win1').count()
+        p2_wins = Game.objects.filter(player1=player, player2=self, result='win2').count()
+        return p1_wins + p2_wins
+
+    def loose_against_player(self, player):
+        p1_loses = Game.objects.filter(player1=self, player2=player, result='win2').count()
+        p2_loses = Game.objects.filter(player1=player, player2=self, result='win1').count()
+        return p1_loses + p2_loses
+
+    def draw_against_player(self, player):
+        p1_draw = Game.objects.filter(player1=self, player2=player, result='draw').count()
+        p2_draw = Game.objects.filter(player1=player, player2=self, result='draw').count()
+        return p1_draw + p2_draw
+
+
     def __unicode__(self):
         return 'Player (username=%s, type=%s)' % (self.username, self.type)
 

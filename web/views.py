@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
 
 from .models import Game, Player
-from .utils import create_new_game, generate_unique_anonymous_username
+from .utils import create_new_game, generate_unique_anonymous_username, calculate_stats
 
 
 class HomeView(TemplateView):
@@ -20,8 +20,7 @@ class GameView(TemplateView):
         board = [[game.get_field_state(row_index, column_index) for column_index in range(3)] for row_index in range(3)]
         game_finished = True if game.get_winner_or_draw() else False
         ai_player = game.get_ai_player()
-
-        print "aha5"
+        stats = calculate_stats(game)
 
         return render(request, self.template_name, locals())
 
@@ -38,7 +37,6 @@ def new_game(request, p1_type, p2_type):
         player1 = Player.objects.create(username=generate_unique_anonymous_username(), type=p1_type)
         player2, created = Player.objects.get_or_create(username="AI Random", type=p2_type)
         game = Game.objects.create(player1=player1, player2=player2)
-        print "aha4"
         return redirect(game)
 
     raise Http404

@@ -78,3 +78,9 @@
 div.modal.fade.in {
     opacity: 0.8;
 }
+
+h1 small,
+h2 small,
+h3 small {
+    color: inherit;
+}
