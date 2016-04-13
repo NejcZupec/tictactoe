@@ -75,12 +75,24 @@ class Game(models.Model):
         return m, action
 
     def get_last_move(self):
-        return self.move_set.latest('sequence_no')
+        try:
+            return self.move_set.latest('sequence_no')
+        except Move.DoesNotExist:
+            return None
+
+    def next_player(self):
+        """
+        Returns next player: 'p1' or 'p2'
+        """
+        move = self.get_last_move()
+        if move:
+            print move.player, self.player1
+            return "p2" if move.player == self.player1 else "p1"
+        else:
+            return "p1"
 
     def get_next_move_sequence_number(self):
-        if self.move_set.count() == 0:
-            return 1
-        return self.get_last_move().sequence_no + 1
+        return 1 if self.move_set.count() == 0 else self.get_last_move().sequence_no + 1
 
     def get_board_2d_and_moves(self):
         """

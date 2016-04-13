@@ -74,3 +74,7 @@
 .player-info-active {
     color: #2c3e50;
 }
+
+div.modal.fade.in {
+    opacity: 0.8;
+}

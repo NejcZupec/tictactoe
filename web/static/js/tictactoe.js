@@ -1,6 +1,6 @@
-function TicTacToeGame(boardObject) {
+function TicTacToeGame(boardObject, currentPlayer) {
     this.board = boardObject;
-    this.currentPlayer = "p1";
+    this.currentPlayer = currentPlayer;
 
     this.registerEvents();
 }

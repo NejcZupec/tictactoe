@@ -57,3 +57,16 @@ class PlayerGameMoveModelTest(TestCase):
         self.assertEqual(self.game.get_field_state(0, 0), 'cross')
         self.game.add_move('p2', 2, 2)
         self.assertEqual(self.game.get_field_state(2, 2), 'circle')
+
+    def test_get_last_move(self):
+        self.assertEqual(self.game.get_last_move(), None)
+        m1 = self.game.add_move(self.player1, 0, 0)
+        self.assertEqual(self.game.get_last_move(), m1)
+
+    def test_next_player(self):
+        self.assertEqual(self.game.next_player(), "p1")
+        self.game.add_move("p1", 0, 0)
+        self.assertEqual(self.game.next_player(), "p2")
+        self.game.add_move("p2", 1, 1)
+        self.assertEqual(self.game.next_player(), "p1")
+

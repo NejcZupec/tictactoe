@@ -15,13 +15,7 @@ class GameView(TemplateView):
 
     def get(self, request, game_id, *args, **kwargs):
         game = Game.objects.get(id=game_id)
-
-        board = {
-            "row0": [game.get_field_state(0, i) for i in range(3)],
-            "row1": [game.get_field_state(1, i) for i in range(3)],
-            "row2": [game.get_field_state(2, i) for i in range(3)],
-        }
-
+        board = [[game.get_field_state(row_index, column_index) for column_index in range(3)] for row_index in range(3)]
         game_finished = True if game.get_winner_or_draw() else False
 
         return render(request, self.template_name, locals())
