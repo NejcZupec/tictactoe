@@ -39,17 +39,17 @@ TicTacToeGame.prototype = {
     },
 
     sendMoveToServer: function (player, field) {
-        var field_id = field.attr("id");
-        var x = field_id.charAt(6);
-        var y = field_id.charAt(8);
+        var fieldId = field.attr("id");
+        var x = fieldId.charAt(6);
+        var y = fieldId.charAt(8);
 
         $.ajax({
             type: "POST",
-            url: new_move_url,
+            url: newMoveUrl,
             data: {
-                'player': player,
-                'x': x,
-                'y': y,
+                "player": player,
+                "x": x,
+                "y": y,
             },
             success: function (response) {
 
