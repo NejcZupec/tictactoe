@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -14,7 +15,7 @@ class Player(models.Model):
         ('registered', 'Registered'),
     )
 
-    username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True)
     type = models.CharField(max_length=15, choices=PLAYER_TYPE)
 
     def __unicode__(self):
@@ -36,7 +37,10 @@ class Game(models.Model):
     player1 = models.ForeignKey('web.Player', related_name='player1')  # cross
     player2 = models.ForeignKey('web.Player', related_name='player2')  # circle
     date_started = models.DateTimeField(auto_now_add=True)
-    result = models.CharField(max_length=15, choices=RESULT)
+    result = models.CharField(max_length=15, choices=RESULT, default='in_progress')
+
+    def get_absolute_url(self):
+        return reverse('game', args=[self.id])
 
     def __unicode__(self):
         return 'Game (%s vs. %s, result=%s)' % (self.player1.username, self.player2.username, self.result)

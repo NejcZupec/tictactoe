@@ -16,11 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from web.views import HomeView, GameView
+from web import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^game/$', GameView.as_view(), name='game'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^game/(?P<game_id>\d+)$', views.GameView.as_view(), name='game'),
+    url(r'^game/new/(?P<p1_type>\w+)/(?P<p2_type>\w+)$', views.new_game, name='new_game'),
 ]
