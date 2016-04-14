@@ -107,11 +107,7 @@ TicTacToeGame.prototype = {
                     that.lockFields();
                     that.showResult(response);
                 }
-            },
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true
+            }
         });
     },
 
@@ -133,11 +129,7 @@ TicTacToeGame.prototype = {
 
                 that.addCrossOrCircle(data.x, data.y);
                 that.sendMoveToServer(that.currentPlayer, data.x, data.y);
-            },
-            xhrFields: {
-                withCredentials: true
-            },
-            crossDomain: true
+            }
         });
     },
 

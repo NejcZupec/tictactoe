@@ -3,6 +3,7 @@ import json
 from django.http import Http404, HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 
 from .models import Game, Player
 from .utils import create_new_game, generate_unique_anonymous_username, calculate_stats
@@ -62,7 +63,7 @@ def new_move(request, game_id):
 
     m, action = game.add_move_and_get_action(player, x, y)
 
-    return HttpResponse(str(action))
+    return render_to_string(request, str(action))
 
 
 def rematch(request, game_id):
