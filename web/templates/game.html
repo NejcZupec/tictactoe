@@ -15,6 +15,10 @@
                     <h3>{{ stats.1.win }} <small>Win</small></h3>
                     <h3>{{ stats.1.lose }} <small>Lose</small></h3>
                     <h3>{{ stats.1.draw }} <small>Draw</small></h3>
+
+                    <br><br>
+
+                    <i class="fa {% if game.player1.is_player_ai %}fa-laptop{% else %}fa-user{% endif %} fa-5x"></i>
                 </div>
                 <div class="col-md-6">
                     <div id="board" class="board">
@@ -41,6 +45,10 @@
                     <h3><small>Win</small> {{ stats.2.win }}</h3>
                     <h3><small>Lose</small> {{ stats.2.lose }}</h3>
                     <h3><small>Draw</small> {{ stats.2.draw }}</h3>
+
+                    <br><br>
+
+                    <i class="fa {% if game.player2.is_player_ai %}fa-laptop{% else %}fa-user{% endif %} fa-5x"></i>
                 </div>
             </div>
         </div>
@@ -60,9 +68,17 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Player 1 wins!</h2>
+                            <h2></h2>
+
+                            <h3>
+                                <span class="player-1-result">{{ game.player1.username }}</span> vs.
+                                <span class="player-2-result">{{ game.player2.username }}</span>
+                            </h3>
+
                             <hr class="star-primary">
-                            <a href="{% url 'rematch' game.id %}" class="btn btn-default btn-lg">Rematch</a>
+                            <a href="{% url 'rematch' game.id %}" class="btn btn-success btn-lg">
+                                <i class="fa fa-refresh"></i> Rematch
+                            </a>
                         </div>
                     </div>
                 </div>

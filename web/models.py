@@ -52,6 +52,9 @@ class Player(models.Model):
         p2_draw = Game.objects.filter(player1=player, player2=self, result='draw').count()
         return p1_draw + p2_draw
 
+    def is_player_ai(self):
+        return True if self.type in ['ai_random', 'ai_min_max'] else False
+
     def __unicode__(self):
         return 'Player (username=%s, type=%s)' % (self.username, self.type)
 
@@ -120,7 +123,6 @@ class Game(models.Model):
         """
         move = self.get_last_move()
         if move:
-            print move.player, self.player1
             return "p2" if move.player == self.player1 else "p1"
         else:
             return "p1"
@@ -175,9 +177,9 @@ class Game(models.Model):
         return g.next_random_move()
 
     def get_ai_player(self):
-        if self.player1.type in ['ai_random', 'ai_min_max']:
+        if self.player1.is_player_ai():
             return 'p1'
-        if self.player2.type in ['ai_random', 'ai_min_max']:
+        if self.player2.is_player_ai():
             return 'p2'
         return ''
 

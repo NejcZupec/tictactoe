@@ -93,3 +93,19 @@ header.leaderboard .container {
     padding-top: 100px;
     padding-bottom: 10px;
 }
+
+span.text-success {
+    color: #18bc9c;
+}
+
+.btn-success {
+    color: #ffffff;
+    background-color: #18bc9c;
+    border-color: #18bc9c;
+}
+
+.btn-success:hover {
+    color: #ffffff;
+    background-color: #128f76;
+    border-color: #11866f;
+}

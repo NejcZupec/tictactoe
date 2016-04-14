@@ -60,18 +60,25 @@ TicTacToeGame.prototype = {
         $(".field").removeClass("field-empty");
     },
 
-    prepareText: function (response) {
+    showResult: function (response) {
         var txt;
 
         if (response === "x") {
-            txt = "Player 1 wins!"
-        } else if (response === 'o') {
-            txt = "Player 2 wins!"
+            txt = "Player 1 wins!";
+            $(".player-1-result").addClass("text-success");
+            $(".player-2-result").removeClass("text-success");
+        } else if (response === "o") {
+            txt = "Player 2 wins!";
+            $(".player-1-result").removeClass("text-success");
+            $(".player-2-result").addClass("text-success");
         } else {
-            txt = "Draw"
+            txt = "Draw";
+            $(".player-1-result").removeClass("text-success");
+            $(".player-2-result").removeClass("text-success");
         }
 
-        return txt;
+        $("#game-ended-modal h2").html(txt);
+        $("#game-ended-modal").modal();
     },
 
     sendMoveToServer: function (player, x, y) {
@@ -86,16 +93,19 @@ TicTacToeGame.prototype = {
                 "y": y,
             },
             success: function (response) {
+
+                // game is in_progress
                 if (response === "None") {
                     that.togglePlayers();
 
                     if (that.aiPlayer === that.currentPlayer) {
                         that.getAiNextMove();
                     }
+
+                // game has ended
                 } else {
                     that.lockFields();
-                    $("#game-ended-modal h2").html(that.prepareText(response));
-                    $("#game-ended-modal").modal();
+                    that.showResult(response);
                 }
             }
         });
