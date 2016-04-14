@@ -1,6 +1,7 @@
 import json
 
 from django.http import Http404, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
 
@@ -51,6 +52,7 @@ def new_game(request, p1_type, p2_type):
     raise Http404
 
 
+@csrf_exempt
 def new_move(request, game_id):
     """
     Save a new game's move to database.
@@ -76,6 +78,7 @@ def rematch(request, game_id):
     return redirect(game)
 
 
+@csrf_exempt
 def ai_next_move(request, game_id):
     game = Game.objects.get(id=game_id)
     x, y = game.get_next_random_move()
