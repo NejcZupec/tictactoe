@@ -1,0 +1,38 @@
+---
+
+- name: Check if virtualenv already exists
+  stat: path={{virtualenv_dir}}
+  register: venv_dir
+
+- name: Create virtualenv for Django web application if it doesn't exist
+  shell: virtualenv {{virtualenv_dir}}
+  when: venv_dir.stat.isdir is not defined
+
+- name: Create log folder if it doesn't exist
+  file:
+    path={{log_dir}}
+    state=directory
+
+- name: Install web application dependencies listed in requirements.txt
+  pip: >
+    requirements={{requirements_file}}
+    virtualenv={{virtualenv_dir}}
+
+- name: Migrate database schema
+  django_manage:
+    command=migrate
+    app_path={{project_root}}
+    virtualenv={{virtualenv_dir}}
+
+- name: Run bower update.
+  django_manage: >
+    command="bower install"
+    app_path={{project_root}}
+    virtualenv={{virtualenv_dir}}
+  notify:
+    - Restart Gunicorn
+
+- name: Enable virtual environment when a user logs in
+  lineinfile:
+    dest: /home/{{ansible_ssh_user}}/.bashrc
+    line: source {{virtualenv_dir}}/bin/activate

@@ -1,0 +1,20 @@
+---
+project_name: tictactoe
+project_root: /home/{{ansible_ssh_user}}/tictactoe
+virtualenv_dir: /home/{{ansible_ssh_user}}/envs/tictactoe
+log_dir: /home/{{ansible_ssh_user}}/logs
+requirements_file: "{{project_root}}/requirements.txt"
+env_variables_file: "/home/{{ansible_ssh_user}}/.profile"
+
+# Gunicorn settings
+gunicorn_port: 8002
+
+# PostgreSQL settings
+shared_buffers: 8MB
+
+django_settings_module: "{{project_name}}.settings"
+secret_key: "hsfuheufhslfjsleifjseifhseoifhseouhspeifhjpw4ifhowi4shfosifhsio"
+database_name: "{{project_name}}"
+database_user: "{{project_name}}"
+database_password: "local_postgres_pass"
+database_host: "127.0.0.1"

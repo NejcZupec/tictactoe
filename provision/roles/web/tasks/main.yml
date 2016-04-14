@@ -1,0 +1,5 @@
+---
+
+- include: config_nginx.yml
+- include: config_web_app.yml
+- include: config_gunicorn.yml

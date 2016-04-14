@@ -1,0 +1,9 @@
+---
+
+- name: Provision a development virtual machine with Vagrant
+  hosts: all
+  remote_user: vagrant
+  roles:
+    - db
+    - install_web_packages
+    - web_vagrant

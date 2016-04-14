@@ -9,5 +9,8 @@ htmlcov/
 .coverage
 coverage.xml
 
-# Ugnore bower files
-/components
+# Ignore bower files
+components
+
+# Ignore vagrant files
+.vagrant
