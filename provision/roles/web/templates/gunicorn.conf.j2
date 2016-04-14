@@ -10,7 +10,7 @@ respawn
 setuid {{ansible_user_id}}
 setgid {{ansible_user_id}}
 
-chdir /opt/{{project_name}}
+chdir {{project_root}}
 
 script
         exec {{virtualenv_dir}}/bin/gunicorn \
@@ -21,7 +21,10 @@ script
                 --error-logfile=/var/log/gunicorn/error.log \
                 --env DJANGO_SETTINGS_MODULE='{{django_settings_module}}' \
                 --env SECRET_KEY='{{secret_key}}' \
-                --env DB_PASSWORD='{{db_password}}' \
+                --env DATABASE_NAME='{{database_name}}' \
+                --env DATABASE_USER='{{database_user}}' \
+                --env DATABASE_PASSWORD='{{database_password}}' \
+                --env DATABASE_HOST='{{database_host}}' \
                 {{project_name}}.wsgi
 end script
 

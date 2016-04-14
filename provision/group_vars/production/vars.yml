@@ -9,6 +9,7 @@ env_variables_file: "/home/{{ansible_ssh_user}}/.profile"
 
 # Gunicorn settings
 gunicorn_port: 8002
+gunicorn_name: "gunicorn_{{project_name}}"
 
 # PostgreSQL settings
 shared_buffers: 16MB

@@ -10,7 +10,7 @@
   become: yes
 
 - name: Write upstart script for gunicorn
-  template: src=gunicorn.conf.j2 dest=/etc/init/gunicorn.conf
+  template: src=gunicorn.conf.j2 dest=/etc/init/{{gunicorn_name}}.conf force=yes
   become: yes
   notify:
     - Restart Gunicorn
