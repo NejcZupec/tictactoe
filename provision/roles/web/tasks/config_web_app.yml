@@ -48,6 +48,11 @@
     command=migrate
     app_path={{project_root}}
     virtualenv={{virtualenv_dir}}
+  environment:
+    - SECRET_KEY: "{{secret_key}}"
+    - DATABASE_NAME: "{{database_name}}"
+    - DATABASE_PASSWORD: "{{database_password}}"
+    - DATABASE_HOST: "{{database_host}}"
 
 - name: Run bower update.
   django_manage: >
@@ -56,12 +61,22 @@
     virtualenv={{virtualenv_dir}}
   notify:
     - Restart Gunicorn
+  environment:
+    - SECRET_KEY: "{{secret_key}}"
+    - DATABASE_NAME: "{{database_name}}"
+    - DATABASE_PASSWORD: "{{database_password}}"
+    - DATABASE_HOST: "{{database_host}}"
 
 - name: Django collectstatic
   django_manage: >
     command="collectstatic"
     app_path={{project_root}}
     virtualenv={{virtualenv_dir}}
+  environment:
+    - SECRET_KEY: "{{secret_key}}"
+    - DATABASE_NAME: "{{database_name}}"
+    - DATABASE_PASSWORD: "{{database_password}}"
+    - DATABASE_HOST: "{{database_host}}"
   tags: collectstatic
   notify:
     - Restart Gunicorn

@@ -1,0 +1,14 @@
+---
+project_name: tictactoe
+project_root: /home/{{ansible_ssh_user}}/tictactoe
+virtualenv_dir: /home/{{ansible_ssh_user}}/envs/tictactoe
+project_repo: git@github.com:NejcZupec/tictactoe.git
+log_dir: /home/{{ansible_ssh_user}}/logs
+requirements_file: "{{project_root}}/requirements.txt"
+env_variables_file: "/home/{{ansible_ssh_user}}/.profile"
+
+# Gunicorn settings
+gunicorn_port: 8002
+
+# PostgreSQL settings
+shared_buffers: 16MB

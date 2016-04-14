@@ -1,0 +1,29 @@
+---
+
+- name: Setup PostgreSQL database
+  hosts: production
+  roles:
+    - db
+  tags:
+    - db
+
+- name: Install web packages
+  hosts: production
+  roles:
+    - install_web_packages
+  tags:
+    - install_web_packages
+
+- name: Setup ENV variables
+  hosts: production
+  roles:
+    - setup_env_variables
+  tags:
+    - setup_env_variables
+
+- name: Setup web server (app, gunicorn, nginx)
+  hosts: production
+  roles:
+    - web
+  tags:
+   - web

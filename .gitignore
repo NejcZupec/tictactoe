@@ -14,3 +14,7 @@ components
 
 # Ignore vagrant files
 .vagrant
+
+# Ignore ansible files
+provision/.vault_pass.txt
+provision/*.retry

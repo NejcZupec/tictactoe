@@ -2,38 +2,38 @@
 
 - name: Set ENV variable for DJANGO_SETTINGS_MODULE
   lineinfile:
-    dest: {{env_variables_file}}
-    line: DJANGO_SETTINGS_MODULE="{{django_settings_module}}"
+    dest: "{{env_variables_file}}"
+    line: export DJANGO_SETTINGS_MODULE="{{django_settings_module}}"
     state: present
 
 - name: Set ENV variable for SECRET_KEY
   lineinfile:
-    dest: {{env_variables_file}}
-    line: SECRET_KEY="{{secret_key}}"
+    dest: "{{env_variables_file}}"
+    line: export SECRET_KEY="{{secret_key}}"
     state: present
 
 - name: Set ENV variable for DATABASE_NAME
   lineinfile:
-    dest: {{env_variables_file}}
-    line: DATABASE_NAME="{{database_name}}"
+    dest: "{{env_variables_file}}"
+    line: export DATABASE_NAME="{{database_name}}"
     state: present
 
 - name: Set ENV variable for DATABASE_USER
   lineinfile:
-    dest: {{env_variables_file}}
-    line: DATABASE_USER="{{database_user}}"
+    dest: "{{env_variables_file}}"
+    line: export DATABASE_USER="{{database_user}}"
     state: present
 
 - name: Set ENV variable for DATABASE_PASSWORD
   lineinfile:
-    dest: {{env_variables_file}}
-    line: DATABASE_PASSWORD="{{database_password}}"
+    dest: "{{env_variables_file}}"
+    line: export DATABASE_PASSWORD="{{database_password}}"
     state: present
 
 - name: Set ENV variable for DATABASE_HOST
   lineinfile:
-    dest: {{env_variables_file}}
-    line: DATABASE_HOST="{{database_host}}"
+    dest: "{{env_variables_file}}"
+    line: export DATABASE_HOST="{{database_host}}"
     state: present
 
 - name: Enable virtual environment when a user logs in
