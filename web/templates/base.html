@@ -76,14 +76,14 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
-                    <li class="page-scroll">
+                    <li>
                         <a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
                     </li>
-                    <li class="page-scroll">
+                    <li>
                         <a href="{% url 'leaderboard' %}"><i class="fa fa-trophy"></i> Leaderboard</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#"><i class="fa fa-user"></i> Login</a>
+                    <li>
+                        <a data-target="#modal-login" data-toggle="modal"><i class="fa fa-user"></i> Login</a>
                     </li>
                 </ul>
             </div>
@@ -150,7 +150,33 @@
     </div>
 
     <!-- Modal windows -->
-    {% block modal-windows %}{% endblock modal-windows %}
+    {% block modal-windows %}
+        <div class="portfolio-modal modal fade" id="modal-login" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <h2>Coming soon</h2>
+
+                                <br>
+
+                                <button type="button" class="btn btn-success btn-lg" data-dismiss="modal">
+                                    <i class="fa fa-times"></i> Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock modal-windows %}
 
     {% block javascript %}
         <!-- jQuery -->
