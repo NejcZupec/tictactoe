@@ -43,7 +43,6 @@ class GameOnlineView(TemplateView):
             'game_finished': True if game.get_winner_or_draw() else False,
             'ai_player': game.get_ai_player(),
             'stats': calculate_stats(game),
-            'online_game': 'false',
             'username': username,
             'show_online_modal_window': True if username == game.player1.username and game.move_set.count() == 0 else False,
             'online_game_opponent_url': request.build_absolute_uri(url),
@@ -76,7 +75,7 @@ def new_game(request, p1_type, p2_type):
 
     if p1_type == 'anonymous' and p2_type == 'ai_min_max':
         player1 = Player.objects.create(username=generate_unique_anonymous_username(), type=p1_type)
-        player2, created = Player.objects.get_or_create(username="AI MiniMax", type=p2_type)
+        player2, _ = Player.objects.get_or_create(username="AI MiniMax", type=p2_type)
         game = Game.objects.create(player1=player1, player2=player2)
         return redirect(game)
 
