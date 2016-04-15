@@ -62,7 +62,7 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'x')
         self.assertEqual(g.get_next_move(), (1, 1))
 
-    def test_state_3(self):
+    def test_state_4(self):
         bs = [['o', ' ', 'x'],
               ['x', ' ', ' '],
               ['x', 'o', 'o']]
@@ -70,7 +70,7 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'o')
         self.assertEqual(g.get_next_move(), (1, 1))
 
-    def test_state_4(self):
+    def test_state_5(self):
         bs = [['o', 'x', 'x'],
               ['x', ' ', ' '],
               ['x', 'o', 'o']]
@@ -78,7 +78,7 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'x')
         self.assertEqual(g.get_next_move(), (1, 1))
 
-    def test_state_5(self):
+    def test_state_6(self):
         bs = [['o', 'x', 'x'],
               ['x', ' ', ' '],
               ['x', 'o', 'o']]
@@ -86,7 +86,7 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'o')
         self.assertEqual(g.get_next_move(), (1, 1))
 
-    def test_state_6(self):
+    def test_state_7(self):
         bs = [['x', ' ', ' '],
               [' ', ' ', ' '],
               [' ', ' ', ' ']]
@@ -94,7 +94,7 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'o')
         self.assertIn(g.get_next_move(), [(0, 1), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)])
 
-    def test_state_7(self):
+    def test_state_8(self):
         # loose position
         bs = [['x', ' ', 'x'],
               [' ', 'o', 'x'],
@@ -103,16 +103,16 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'o')
         self.assertIn(g.get_next_move(), [(0, 1), (1, 0), (2, 1), (2, 2)])
 
-    def test_state_8(self):
+    def test_state_9(self):
         bs = [['x', ' ', ' '],
               [' ', 'o', ' '],
               [' ', ' ', 'x']]
 
         g = TicTacToeAI(bs, 'o')
-        for i in range(10):
+        for _ in range(10):
             self.assertIn(g.get_next_move(), [(0, 1), (1, 0), (1, 2), (2, 1)])
 
-    def test_state_9(self):
+    def test_state_10(self):
         # draw state
         bs = [['x', 'x', 'o'],
               ['o', 'o', 'x'],
@@ -121,7 +121,7 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'o')
         self.assertIn(g.get_next_move(), [(2, 1), (2, 2)])
 
-    def test_state_10(self):
+    def test_state_11(self):
         # draw state
         bs = [[' ', ' ', ' '],
               [' ', 'o', ' '],
@@ -130,16 +130,16 @@ class TestSpecificGameStates(TestCase):
         g = TicTacToeAI(bs, 'x')
         self.assertEqual(g.get_next_move(), (0, 1))
 
-    def test_state_11(self):
+    def test_state_12(self):
         bs = [['x', 'o', 'x'],
               [' ', 'x', 'o'],
               ['o', ' ', ' ']]
 
         g = TicTacToeAI(bs, 'x')
-        for i in range(10):
+        for _ in range(10):
             self.assertEqual(g.get_next_move(), (2, 2))
 
-    def test_state_12(self):
+    def test_state_13(self):
         bs = [['x', 'o', 'x'],
               ['o', 'x', 'o'],
               ['o', ' ', ' ']]

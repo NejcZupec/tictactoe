@@ -19,13 +19,15 @@ class GameView(TemplateView):
 
     def get(self, request, game_id, *args, **kwargs):
         game = Game.objects.get(id=game_id)
-        board = [[game.get_field_state(row_index, column_index) for column_index in range(3)] for row_index in range(3)]
-        game_finished = True if game.get_winner_or_draw() else False
-        ai_player = game.get_ai_player()
-        stats = calculate_stats(game)
-        online_game = 'false'
 
-        return render(request, self.template_name, locals())
+        return render(request, self.template_name, {
+            'game': Game.objects.get(id=game_id),
+            'board': [[game.get_field_state(row_idx, column_idx) for column_idx in range(3)] for row_idx in range(3)],
+            'game_finished': True if game.get_winner_or_draw() else False,
+            'ai_player': game.get_ai_player(),
+            'stats': calculate_stats(game),
+            'online_game': 'false',
+        })
 
 
 class GameOnlineView(TemplateView):
@@ -33,28 +35,29 @@ class GameOnlineView(TemplateView):
 
     def get(self, request, game_id, *args, **kwargs):
         game = Game.objects.get(id=game_id)
-        board = [[game.get_field_state(row_index, column_index) for column_index in range(3)] for row_index in range(3)]
-        game_finished = True if game.get_winner_or_draw() else False
-        ai_player = game.get_ai_player()
-        stats = calculate_stats(game)
-
-        # arguments for online game
         username = request.GET.get('player')
-        show_online_modal_window = True if username == game.player1.username and game.move_set.count() == 0 else False
         url = '%s?player=%s' % (reverse('online_game', args=[game.id]), game.player2.username)
-        online_game_opponent_url = request.build_absolute_uri(url)
-        online_game = 'true'
 
-        return render(request, self.template_name, locals())
+        return render(request, self.template_name, {
+            'board': [[game.get_field_state(row_idx, column_idx) for column_idx in range(3)] for row_idx in range(3)],
+            'game_finished': True if game.get_winner_or_draw() else False,
+            'ai_player': game.get_ai_player(),
+            'stats': calculate_stats(game),
+            'online_game': 'false',
+            'username': username,
+            'show_online_modal_window': True if username == game.player1.username and game.move_set.count() == 0 else False,
+            'online_game_opponent_url': request.build_absolute_uri(url),
+            'online_game': 'true',
+        })
 
 
 class Leaderboard(TemplateView):
     template_name = 'leaderboard.html'
 
     def get(self, request, *args, **kwargs):
-        players = Player.objects.all()
-
-        return render(request, self.template_name, locals())
+        return render(request, self.template_name, {
+            'players': Player.objects.all(),
+        })
 
 
 def new_game(request, p1_type, p2_type):
@@ -67,7 +70,7 @@ def new_game(request, p1_type, p2_type):
 
     if p1_type == 'anonymous' and p2_type == 'ai_random':
         player1 = Player.objects.create(username=generate_unique_anonymous_username(), type=p1_type)
-        player2, created = Player.objects.get_or_create(username="AI Random", type=p2_type)
+        player2, _ = Player.objects.get_or_create(username="AI Random", type=p2_type)
         game = Game.objects.create(player1=player1, player2=player2)
         return redirect(game)
 
@@ -103,7 +106,7 @@ def new_move(request, game_id):
     x = request.POST.get('x')
     y = request.POST.get('y')
 
-    m, action = game.add_move_and_get_action(player, x, y)
+    _, action = game.add_move_and_get_action(player, x, y)
 
     return HttpResponse(str(action))
 
