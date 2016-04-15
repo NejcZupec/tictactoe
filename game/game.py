@@ -1,5 +1,7 @@
 import random
 
+from utils import all_equal
+
 
 class Game(object):
     """
@@ -47,20 +49,20 @@ class Game(object):
 
             # diagonal win
             d1 = [row[i] for i, row in enumerate(self.board)]
-            if self._all_equal(d1):
+            if all_equal(d1):
                 return last_player
             d2 = [row[-i-1] for i, row in enumerate(self.board)]
-            if self._all_equal(d2):
+            if all_equal(d2):
                 return last_player
 
             # horizontal win
             for row in self.board:
-                if self._all_equal(row):
+                if all_equal(row):
                     return last_player
 
             # vertical win
             for row in zip(*self.board):  # transpose the board
-                if self._all_equal(row):
+                if all_equal(row):
                     return last_player
 
             # draw game, no winner, the board is full
@@ -87,6 +89,3 @@ class Game(object):
         empty_fields = self.get_empty_fields()
         return random.choice(empty_fields)
 
-    @staticmethod
-    def _all_equal(row):
-        return not row[0] == ' ' and row[1:] == row[:-1]
