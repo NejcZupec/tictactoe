@@ -6,9 +6,9 @@
     <header>
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
                     <div class="row">
-                        <div class="col-lg-2 col-lg-offset-5">
+                        <div class="col-md-2 col-md-offset-5">
                             <img class="img-responsive" src="{% static 'img/tic-tac-toe-icon.png' %}" alt="">
                         </div>
                     </div>
@@ -20,13 +20,22 @@
                     </div>
 
                     <div class="row">
-                      <a href="{% url 'new_game' 'anonymous' 'ai_random' %}" class="btn btn-lg btn-outline">
-                        <i class="fa fa-user"></i> Player vs. Computer <i class="fa fa-laptop"></i>
-                      </a>
-                      <br>
-                      <a href="{% url 'new_game' 'anonymous' 'anonymous' %}" class="btn btn-lg btn-outline btn-danger">
-                        <i class="fa fa-user"></i> Player 1 vs. Player 2 <i class="fa fa-user"></i>
-                      </a>
+                        <a href="{% url 'new_game' 'anonymous' 'anonymous' %}" class="btn btn-lg btn-outline">
+                            <i class="fa fa-user"></i> Player vs. Player <i class="fa fa-user"></i>
+                        </a>
+                        <br>
+                        <a href="{% url 'new_game' 'anonymous' 'ai_min_max' %}" class="btn btn-lg btn-outline">
+                            <i class="fa fa-user"></i> Player vs. Perfect AI <i class="fa fa-laptop"></i>
+                        </a>
+                        <br>
+                        <a href="{% url 'new_game' 'anonymous' 'ai_random' %}" class="btn btn-lg btn-outline">
+                            <i class="fa fa-user"></i> Player vs. Computer <i class="fa fa-laptop"></i>
+                        </a>
+                        <br>
+                        <a href="{% url 'new_online_game' 'anonymous' 'anonymous' %}" class="btn btn-lg btn-outline">
+                            <i class="fa fa-user"></i> Player vs. Online Player <i class="fa fa-globe"> <label class="label label-danger">beta</label></i>
+                        </a>
+
                     </div>
                 </div>
             </div>

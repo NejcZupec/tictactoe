@@ -24,10 +24,13 @@ urlpatterns = [
     url(r'^$', views.HomeView.as_view(), name='home'),
 
     url(r'^game/(?P<game_id>\d+)$', views.GameView.as_view(), name='game'),
+    url(r'^game/(?P<game_id>\d+)/online/$', views.GameOnlineView.as_view(), name='online_game'),
     url(r'^game/(?P<game_id>\d+)/ai/move/$', views.ai_next_move, name='ai_next_move'),
     url(r'^game/(?P<game_id>\d+)/rematch$', views.rematch, name='rematch'),
     url(r'^game/(?P<game_id>\d+)/move/new', views.new_move, name='new_move'),
+
     url(r'^game/new/(?P<p1_type>\w+)/(?P<p2_type>\w+)$', views.new_game, name='new_game'),
+    url(r'^game/online/new/(?P<p1_type>\w+)/(?P<p2_type>\w+)$', views.new_online_game, name='new_online_game'),
 
     url(r'leaderboard/$', views.Leaderboard.as_view(), name='leaderboard'),
 ]

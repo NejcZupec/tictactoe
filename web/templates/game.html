@@ -85,6 +85,29 @@
             </div>
         </div>
     </div>
+
+    <div class="portfolio-modal modal fade" id="new-online-game-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <div class="modal-body">
+                            <h3>Send this link to your friend</h3>
+                            <p>{{ online_game_opponent_url }}</p>
+                            <br><br>
+                            <button type="button" class="btn btn-success btn-lg" data-dismiss="modal">Start</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock modal-windows %}
 
 {% block javascript %}
@@ -96,11 +119,20 @@
     <!-- TicTacToe JavaScript -->
     <script src="{% static 'js/tictactoe.js' %}"></script>
 
+    <!-- Open modal windows for online game -->
+    {% if show_online_modal_window %}
+        <script>
+            $(document).ready(function () {
+                $("#new-online-game-modal").modal();
+            });
+        </script>
+    {% endif %}
+
     <!-- Start a new TicTacToe game -->
     <script>
         $(document).ready(function () {
             new TicTacToeGame($("#board"), "{{ game.next_player }}", "{% url 'new_move' game.id %}",
-                    "{% url 'ai_next_move' game.id %}", "{{ ai_player }}");
+                    "{% url 'ai_next_move' game.id %}", "{{ ai_player }}", "{{ online_game }}");
         });
     </script>
 {% endblock javascript %}

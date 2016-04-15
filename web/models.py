@@ -176,12 +176,26 @@ class Game(models.Model):
         g = Game(board=board, moves=moves)
         return g.next_random_move()
 
+    def get_next_minimax_move(self):
+        from game.ai import TicTacToeAI
+        board, moves = self.get_board_2d_and_moves()
+        ai_player = 'x' if self.get_ai_player() == 'p1' else 'o'
+        g = TicTacToeAI(board, ai_player)
+        return g.get_next_move()
+
     def get_ai_player(self):
         if self.player1.is_player_ai():
             return 'p1'
         if self.player2.is_player_ai():
             return 'p2'
         return ''
+
+    def get_ai_player_type(self):
+        ai_player = self.get_ai_player()
+        if ai_player == 'p1':
+            return self.player1.type
+        if ai_player == 'p2':
+            return self.player2.type
 
     def __unicode__(self):
         return 'Game (%s vs. %s, result=%s)' % (self.player1.username, self.player2.username, self.result)

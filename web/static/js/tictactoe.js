@@ -1,9 +1,10 @@
-function TicTacToeGame(boardObject, currentPlayer, newMoveUrl, aiNextMoveUrl, aiPlayer) {
+function TicTacToeGame(boardObject, currentPlayer, newMoveUrl, aiNextMoveUrl, aiPlayer, onlineGame) {
     this.board = boardObject;
     this.currentPlayer = currentPlayer;
     this.newMoveUrl = newMoveUrl;
     this.aiNextMoveUrl = aiNextMoveUrl;
     this.aiPlayer = aiPlayer;
+    this.onlineGame = onlineGame;
 
     this.registerEvents();
     this.startGame();

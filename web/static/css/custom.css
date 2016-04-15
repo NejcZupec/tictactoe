@@ -109,3 +109,7 @@ span.text-success {
     background-color: #128f76;
     border-color: #11866f;
 }
+
+.btn-outline label {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
