@@ -171,12 +171,17 @@ TicTacToeGame.prototype = {
                 },
                 success: function (data) {
                     if (data !== null) {
-                        if (data.player == 'p1') {
-                            that.addCross(data.x, data.y)
+                        that.addCrossOrCircle(data.x, data.y);
+
+                        // game is in_progress
+                        if (data.action == null) {
+                            that.togglePlayers();
+
+                        // game has ended
                         } else {
-                            that.addCircle(data.x, data.y)
+                            that.lockFields();
+                            that.showResult(data.action);
                         }
-                        that.togglePlayers();
                     } else {
                         setTimeout(function () {
                             that.opponentMoveListener();

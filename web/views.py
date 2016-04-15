@@ -151,10 +151,13 @@ def opponent_move(request, game_id):
             sequence_no=sequence_no,
         ).latest('sequence_no')
 
+        action = game.get_winner_or_draw()
+
         return HttpResponse(json.dumps({
             'player': opponent_player,
             'x': m.x,
             'y': m.y,
+            'action': action,
         }), content_type='application/json')
     except Move.DoesNotExist:
         return HttpResponse(json.dumps(None), content_type='application/json')
