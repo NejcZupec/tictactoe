@@ -197,6 +197,14 @@ class Game(models.Model):
         if ai_player == 'p2':
             return self.player2.type
 
+    def get_player(self):
+        ai_player = self.get_ai_player()
+        if ai_player:
+            player = 'p1' if ai_player == 'p2' else 'p2'
+        else:
+            player = ''
+        return player
+
     def __unicode__(self):
         return 'Game (%s vs. %s, result=%s)' % (self.player1.username, self.player2.username, self.result)
 

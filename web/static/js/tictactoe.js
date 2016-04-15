@@ -1,10 +1,14 @@
-function TicTacToeGame(boardObject, currentPlayer, newMoveUrl, aiNextMoveUrl, aiPlayer, onlineGame) {
+function TicTacToeGame(boardObject, currentPlayer, newMoveUrl, aiNextMoveUrl, aiPlayer, onlineGame, opponentMoveUrl,
+                       player, sequenceNo) {
     this.board = boardObject;
-    this.currentPlayer = currentPlayer;
+    this.currentPlayer = currentPlayer; // ['p1', 'p2']
     this.newMoveUrl = newMoveUrl;
     this.aiNextMoveUrl = aiNextMoveUrl;
-    this.aiPlayer = aiPlayer;
-    this.onlineGame = onlineGame;
+    this.aiPlayer = aiPlayer;  // ['p1', 'p2', '']
+    this.onlineGame = onlineGame;  // ['true', 'false']
+    this.opponentMoveUrl = opponentMoveUrl;
+    this.player = player;  // [p1, p2] in this browser only this user can play
+    this.sequenceNo = parseInt(sequenceNo);
 
     this.registerEvents();
     this.startGame();
@@ -43,12 +47,19 @@ TicTacToeGame.prototype = {
         // toggle players info divs
         $("#player-1-info").toggleClass("player-info-active");
         $("#player-2-info").toggleClass("player-info-active");
+        $("#player-1-info .h4-your-turn").toggleClass("h4-your-turn-hidden");
+        $("#player-2-info .h4-your-turn").toggleClass("h4-your-turn-hidden");
+
+        // lock/unlock fields
+        this.toggleLockUnlockFields();
+
+        // increment sequence number
+        this.sequenceNo++;
     },
 
     clickOnField: function (field) {
-
         // check if move is valid and if it is, send it to the server
-        if (field.hasClass("field-empty")) {
+        if (field.hasClass("field-empty") && !field.hasClass("field-locked")) {
             var fieldId = field.attr("id");
             var x = fieldId.charAt(6);
             var y = fieldId.charAt(8);
@@ -58,7 +69,19 @@ TicTacToeGame.prototype = {
     },
 
     lockFields: function () {
-        $(".field").removeClass("field-empty");
+        $(".field").addClass("field-locked");
+    },
+
+    unlockFields: function () {
+        $(".field").removeClass("field-locked");
+    },
+
+    toggleLockUnlockFields: function () {
+        if (this.player !== '' &&  this.player !== this.currentPlayer) {
+            this.lockFields();
+        } else if (this.player !== '' && this.player == this.currentPlayer) {
+            this.unlockFields();
+        }
     },
 
     showResult: function (response) {
@@ -101,6 +124,8 @@ TicTacToeGame.prototype = {
 
                     if (that.aiPlayer === that.currentPlayer) {
                         that.getAiNextMove();
+                    } else if (that.onlineGame === 'true') {
+                        that.opponentMoveListener();
                     }
 
                 // game has ended
@@ -127,16 +152,50 @@ TicTacToeGame.prototype = {
             type: "GET",
             url: this.aiNextMoveUrl,
             success: function (data) {
-
                 that.addCrossOrCircle(data.x, data.y);
                 that.sendMoveToServer(that.currentPlayer, data.x, data.y);
             }
         });
     },
 
+    opponentMoveListener: function () {
+        var that = this;
+
+        if (this.player !== this.currentPlayer) {
+            $.ajax({
+                type: "GET",
+                url: this.opponentMoveUrl,
+                data: {
+                    "opponent_player": this.currentPlayer,
+                    "sequence_no": this.sequenceNo
+                },
+                success: function (data) {
+                    if (data !== null) {
+                        if (data.player == 'p1') {
+                            that.addCross(data.x, data.y)
+                        } else {
+                            that.addCircle(data.x, data.y)
+                        }
+                        that.togglePlayers();
+                    } else {
+                        setTimeout(function () {
+                            that.opponentMoveListener();
+                        ;}, 500);
+                    }
+                }
+            });
+        }
+    },
+
     startGame: function () {
+        this.toggleLockUnlockFields();
+
         if (this.aiPlayer === this.currentPlayer) {
             this.getAiNextMove();
+        }
+
+        if (this.onlineGame === 'true') {
+            this.opponentMoveListener();
         }
     }
 };

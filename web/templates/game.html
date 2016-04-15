@@ -7,18 +7,16 @@
         <div class="container">
             <div class="row">
                 <div id="player-1-info" class="col-md-3 player-info player-info-left {% if game.next_player == 'p1' %}player-info-active{% endif %}">
-                    <h1><i class="fa fa-times"></i> <small>Player 1</small></h1>
-                    <h2>{{ game.player1.username }}</h2>
 
-                    <br><br>
+                    <i class="fa {% if game.player1.is_player_ai %}fa-laptop{% else %}fa-user{% endif %} fa-5x"></i>
+                    <h1><i class="fa fa-times"></i> <small>Player 1</small></h1>
+                    <h2 class="h2-player-username">{{ game.player1.username }}</h2>
+
+                    <h4 class="h4-your-turn {% if game.next_player == 'p2' %}h4-your-turn-hidden{% endif %}"><label class="label label-default label-your-turn label-2x">Your turn</label></h4>
 
                     <h3>{{ stats.1.win }} <small>Win</small></h3>
                     <h3>{{ stats.1.lose }} <small>Lose</small></h3>
                     <h3>{{ stats.1.draw }} <small>Draw</small></h3>
-
-                    <br><br>
-
-                    <i class="fa {% if game.player1.is_player_ai %}fa-laptop{% else %}fa-user{% endif %} fa-5x"></i>
                 </div>
                 <div class="col-md-6">
                     <div id="board" class="board">
@@ -37,18 +35,16 @@
                     </div>
                 </div>
                 <div id="player-2-info" class="col-md-3 player-info player-info-right {% if game.next_player == 'p2' %}player-info-active{% endif %}">
-                    <h1><small>Player 2</small> <i class="fa fa-circle-o"></i></h1>
-                    <h2>{{ game.player2.username }}</h2>
-
-                    <br><br>
-
-                    <h3><small>Win</small> {{ stats.2.win }}</h3>
-                    <h3><small>Lose</small> {{ stats.2.lose }}</h3>
-                    <h3><small>Draw</small> {{ stats.2.draw }}</h3>
-
-                    <br><br>
 
                     <i class="fa {% if game.player2.is_player_ai %}fa-laptop{% else %}fa-user{% endif %} fa-5x"></i>
+                    <h1><i class="fa fa-circle-o"></i> <small>Player 2</small></h1>
+                    <h2 class="h2-player-username">{{ game.player2.username }}</h2>
+
+                    <h4 class="h4-your-turn {% if game.next_player == 'p1' %}h4-your-turn-hidden{% endif %}"><label class="label label-default label-your-turn label-2x">Your turn</label></h4>
+
+                    <h3>{{ stats.2.win }} <small>Win</small></h3>
+                    <h3>{{ stats.2.lose }} <small>Lose</small></h3>
+                    <h3>{{ stats.2.draw }} <small>Draw</small></h3>
                 </div>
             </div>
         </div>
@@ -76,9 +72,16 @@
                             </h3>
 
                             <hr class="star-primary">
-                            <a href="{% url 'rematch' game.id %}" class="btn btn-success btn-lg">
-                                <i class="fa fa-refresh"></i> Rematch
-                            </a>
+
+                            {% if online_game == 'true' %}
+                                <a href="{% url 'home' %}" class="btn btn-success btn-lg">
+                                    <i class="fa fa-plus"></i> New Game
+                                </a>
+                            {% else %}
+                                <a href="{% url 'rematch' game.id %}" class="btn btn-success btn-lg">
+                                    <i class="fa fa-refresh"></i> Rematch
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -131,8 +134,17 @@
     <!-- Start a new TicTacToe game -->
     <script>
         $(document).ready(function () {
-            new TicTacToeGame($("#board"), "{{ game.next_player }}", "{% url 'new_move' game.id %}",
-                    "{% url 'ai_next_move' game.id %}", "{{ ai_player }}", "{{ online_game }}");
+            new TicTacToeGame(
+                    $("#board"),
+                    "{{ game.next_player }}",
+                    "{% url 'new_move' game.id %}",
+                    "{% url 'ai_next_move' game.id %}",
+                    "{{ game.get_ai_player }}",
+                    "{{ online_game }}",
+                    "{% url 'opponent_move' game.id %}",
+                    "{{ player }}",
+                    "{{ game.get_next_move_sequence_number }}"
+            );
         });
     </script>
 {% endblock javascript %}

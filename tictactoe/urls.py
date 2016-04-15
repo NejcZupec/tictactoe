@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^game/(?P<game_id>\d+)/ai/move/$', views.ai_next_move, name='ai_next_move'),
     url(r'^game/(?P<game_id>\d+)/rematch$', views.rematch, name='rematch'),
     url(r'^game/(?P<game_id>\d+)/move/new', views.new_move, name='new_move'),
+    url(r'^game/(?P<game_id>\d+)/opponent/move/$', views.opponent_move, name='opponent_move'),
 
     url(r'^game/new/(?P<p1_type>\w+)/(?P<p2_type>\w+)$', views.new_game, name='new_game'),
     url(r'^game/online/new/(?P<p1_type>\w+)/(?P<p2_type>\w+)$', views.new_online_game, name='new_online_game'),

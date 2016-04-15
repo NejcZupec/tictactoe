@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, render
 
-from .models import Game, Player
+from .models import Game, Player, Move
 from .utils import create_new_game, generate_unique_anonymous_username, calculate_stats
 
 
@@ -24,9 +24,9 @@ class GameView(TemplateView):
             'game': Game.objects.get(id=game_id),
             'board': [[game.get_field_state(row_idx, column_idx) for column_idx in range(3)] for row_idx in range(3)],
             'game_finished': True if game.get_winner_or_draw() else False,
-            'ai_player': game.get_ai_player(),
             'stats': calculate_stats(game),
             'online_game': 'false',
+            'player': game.get_player(),
         })
 
 
@@ -37,16 +37,18 @@ class GameOnlineView(TemplateView):
         game = Game.objects.get(id=game_id)
         username = request.GET.get('player')
         url = '%s?player=%s' % (reverse('online_game', args=[game.id]), game.player2.username)
+        player = 'p1' if username == game.player1.username else 'p2'
 
         return render(request, self.template_name, {
+            'game': Game.objects.get(id=game_id),
             'board': [[game.get_field_state(row_idx, column_idx) for column_idx in range(3)] for row_idx in range(3)],
             'game_finished': True if game.get_winner_or_draw() else False,
-            'ai_player': game.get_ai_player(),
             'stats': calculate_stats(game),
             'username': username,
             'show_online_modal_window': True if username == game.player1.username and game.move_set.count() == 0 else False,
             'online_game_opponent_url': request.build_absolute_uri(url),
             'online_game': 'true',
+            'player': player,
         })
 
 
@@ -131,3 +133,31 @@ def ai_next_move(request, game_id):
         x, y = game.get_next_minimax_move()
 
     return HttpResponse(json.dumps({'x': x, 'y': y}), content_type='application/json')
+
+
+def opponent_move(request, game_id):
+    """
+    GET parameters:
+    - opponent_player ['p1', 'p2']
+    """
+    game = Game.objects.get(id=game_id)
+    opponent_player = request.GET.get('opponent_player')
+    sequence_no = request.GET.get('sequence_no')
+
+    try:
+        m = Move.objects.filter(
+            game=game,
+            player=game.player1 if opponent_player == 'p1' else game.player2,
+            sequence_no=sequence_no,
+        ).latest('sequence_no')
+
+        return HttpResponse(json.dumps({
+            'player': opponent_player,
+            'x': m.x,
+            'y': m.y,
+        }), content_type='application/json')
+    except Move.DoesNotExist:
+        return HttpResponse(json.dumps(None), content_type='application/json')
+
+
+
