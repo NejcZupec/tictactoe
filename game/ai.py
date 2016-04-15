@@ -18,7 +18,7 @@ def board_state_print(board_state):
 def board_state_possible_moves(board_state):
     result = []
     for i, row in enumerate(board_state):
-        for j, column in enumerate(row):
+        for j, _ in enumerate(row):
             if board_state[i][j] == ' ':
                 result.append((i, j))
     return result

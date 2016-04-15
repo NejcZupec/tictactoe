@@ -77,7 +77,7 @@ class Game(object):
         """
         result = []
         for i, row in enumerate(self.board):
-            for j, column in enumerate(row):
+            for j, _ in enumerate(row):
                 if self.board[i][j] == ' ':
                     result.append((i, j))
         return result

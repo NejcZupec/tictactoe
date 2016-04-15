@@ -75,7 +75,7 @@
     color: #2c3e50;
 }
 
-div.modal.fade.in {
+.fade.in {
     opacity: 0.8;
 }
 
@@ -94,7 +94,7 @@ header.leaderboard .container {
     padding-bottom: 10px;
 }
 
-span.text-success {
+.text-success {
     color: #18bc9c;
 }
 

@@ -76,7 +76,7 @@ def new_game(request, p1_type, p2_type):
 
     if p1_type == 'anonymous' and p2_type == 'ai_min_max':
         player1 = Player.objects.create(username=generate_unique_anonymous_username(), type=p1_type)
-        player2, created = Player.objects.get_or_create(username="AI MinMax", type=p2_type)
+        player2, created = Player.objects.get_or_create(username="AI MiniMax", type=p2_type)
         game = Game.objects.create(player1=player1, player2=player2)
         return redirect(game)
 

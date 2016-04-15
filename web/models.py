@@ -178,7 +178,7 @@ class Game(models.Model):
 
     def get_next_minimax_move(self):
         from game.ai import TicTacToeAI
-        board, moves = self.get_board_2d_and_moves()
+        board, _ = self.get_board_2d_and_moves()
         ai_player = 'x' if self.get_ai_player() == 'p1' else 'o'
         g = TicTacToeAI(board, ai_player)
         return g.get_next_move()
