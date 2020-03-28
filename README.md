@@ -48,3 +48,11 @@ Clone the project from Github and run the following commands:
     python manage.py runserver 0.0.0.0:8000
 
 Open a browser on your local machine and go to: http://127.0.0.1:8080/
+
+## Production ##
+
+The app is hosted at Heroku. It's reachable at [tictactoe.zupec.net](tictactoe.zupec.net).
+
+Deploy changes to Heroku:
+
+    git push heroku master
