@@ -16,8 +16,10 @@ def get_env_variable(var_name):
 
 DEBUG = False
 
-# TODO: temporarily disabled to test Heroku
-# ALLOWED_HOSTS = ['tictactoe.zupec.net']
+ALLOWED_HOSTS = [
+    'tictactoe.zupec.net',
+    'tictactoe-zupec.herokuapp.com',
+]
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
