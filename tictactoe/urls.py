@@ -34,4 +34,6 @@ urlpatterns = [
     url(r'^game/online/new/(?P<p1_type>\w+)/(?P<p2_type>\w+)$', views.new_online_game, name='new_online_game'),
 
     url(r'leaderboard/$', views.Leaderboard.as_view(), name='leaderboard'),
+
+    url(r'health/$', views.health, name='health'),
 ]

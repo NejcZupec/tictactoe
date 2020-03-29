@@ -163,4 +163,9 @@ def opponent_move(request, game_id):
         return HttpResponse(json.dumps(None), content_type='application/json')
 
 
+def health(request):
+    return HttpResponse(
+        json.dumps({'status': 'ok'}),
+        content_type='application/json',
+    )
 
