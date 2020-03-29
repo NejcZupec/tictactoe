@@ -21,3 +21,6 @@ provision/*.retry
 
 # Ignore log
 tictactoe.log
+
+# Ignore .pyc
+.pyc
