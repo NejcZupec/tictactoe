@@ -51,7 +51,7 @@ Open a browser on your local machine and go to: http://127.0.0.1:8080/
 
 ## Production ##
 
-The app is hosted at Heroku. It's reachable at [tictactoe.zupec.net](tictactoe.zupec.net).
+The app is hosted at Heroku. It's reachable at [https://tictactoe-zupec.herokuapp.com/](https://tictactoe-zupec.herokuapp.com/).
 
 Deploy changes to Heroku:
 
